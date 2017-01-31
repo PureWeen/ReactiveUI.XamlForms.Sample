@@ -15,44 +15,58 @@ namespace ReactiveUI.XamlForms.Sample
 {
 	public partial class App : Application
 	{
-        static AppBootstrapper _bootStrapper;
-        AppBootstrapper BootStrapper
-        {
-            get
-            {
+		static AppBootstrapper _bootStrapper;
+		AppBootstrapper BootStrapper
+		{
+			get
+			{
 				if (_bootStrapper == null)
 					_bootStrapper = RxApp.SuspensionHost.GetAppState<AppBootstrapper>();
-				
-                return _bootStrapper;
-            }
-        }
 
-        public App ()
+				return _bootStrapper;
+			}
+		}
+
+		public App()
 		{
 			InitializeComponent();
+
+			//this seems wrong but when doing a resume on iOS this is all that I've found that works
+
+#if __UNIFIED__
+			if (BootStrapper == null)
+			{
+				RxApp.SuspensionHost.ObserveAppState<AppBootstrapper>().Take(1).Wait();
+			}
+#endif
+
 			MainPage = BootStrapper.CreateMainPage();
 		}
-		protected override void OnStart ()
+		protected override void OnStart()
 		{
 			// Handle when your app starts
 		}
 
-		protected override void OnSleep ()
+		protected override void OnSleep()
 		{
 			// Handle when your app sleeps
 		}
 
-		protected override void OnResume ()
+		protected override void OnResume()
 		{
 			// Handle when your app resumes
 		}
 
 
-        static AutoSuspendHelper autoSuspendHelper;
-		public static void Initialize(
+		static AutoSuspendHelper autoSuspendHelper;
+		public static AutoSuspendHelper Initialize(
 
 #if __ANDROID__
 			Android.App.Application application
+#endif
+
+#if __UNIFIED__
+			UIKit.UIApplicationDelegate application
 #endif
 
 #if WINDOWS_UWP
@@ -80,6 +94,10 @@ namespace ReactiveUI.XamlForms.Sample
 
 
             RxApp.SuspensionHost.SetupDefaultSuspendResume();
+
+			return autoSuspendHelper;
 		}
+
+
 	}
 }

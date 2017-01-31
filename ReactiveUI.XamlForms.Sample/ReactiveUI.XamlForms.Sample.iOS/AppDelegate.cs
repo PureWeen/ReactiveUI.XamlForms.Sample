@@ -13,6 +13,9 @@ namespace ReactiveUI.XamlForms.Sample.iOS
 	[Register("AppDelegate")]
 	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
 	{
+
+        AutoSuspendHelper suspendHelper;
+
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
 		// method you should instantiate the window, load the UI into it and then make the window
@@ -23,11 +26,25 @@ namespace ReactiveUI.XamlForms.Sample.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init ();
-            ReactiveUI.XamlForms.Sample.App.Initialize(this.Application);
+			suspendHelper = ReactiveUI.XamlForms.Sample.App.Initialize(this);
+			suspendHelper.FinishedLaunching(app, options);
+
 
             LoadApplication(new ReactiveUI.XamlForms.Sample.App ());
 
-			return base.FinishedLaunching (app, options);
+
+			base.FinishedLaunching (app, options);
+			return true;
+		}
+
+		public override void DidEnterBackground(UIApplication application)
+		{
+			suspendHelper.DidEnterBackground(application);
+		}
+
+		public override void OnActivated(UIApplication application)
+		{
+			suspendHelper.OnActivated(application);
 		}
 	}
 }

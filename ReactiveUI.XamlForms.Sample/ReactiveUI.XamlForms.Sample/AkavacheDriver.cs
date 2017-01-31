@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using Splat;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Akavache.Mobile
 {
@@ -11,7 +12,7 @@ namespace Akavache.Mobile
     {
         public IObservable<object> LoadState()
         {
-            return BlobCache.UserAccount.GetObject<object>("__AppState");
+			return BlobCache.UserAccount.GetObject<object>("__AppState");
         }
 
         public IObservable<Unit> SaveState(object state)
