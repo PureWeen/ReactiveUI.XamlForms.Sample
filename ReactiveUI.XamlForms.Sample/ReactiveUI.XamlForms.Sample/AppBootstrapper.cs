@@ -40,6 +40,8 @@ namespace ReactiveUI.XamlForms.Sample
 			Locator.CurrentMutable.Register(() => new SecondPage(), typeof(IViewFor<SecondPageViewModel>));
         }
 
+		//The init is only called from CreateNewAppState... If this comes from the CACHE
+		//then the Router is already instantiated and set to the correct VM
         public void Init()
         { 
 			Router = new RoutingState();
