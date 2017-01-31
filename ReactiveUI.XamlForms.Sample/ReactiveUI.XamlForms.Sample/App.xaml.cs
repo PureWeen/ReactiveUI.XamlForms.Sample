@@ -31,12 +31,17 @@ namespace ReactiveUI.XamlForms.Sample
 		{
 			InitializeComponent();
 
-			//this seems wrong but when doing a resume on iOS this is all that I've found that works
+			//this seems wrong but when doing a resume on iOS or android this is all that I've found that works
+			//to make sure the bootstrapper loads
+			//I'm probably doing a life cycle thing wrong sommewhere :-/
 
-#if __UNIFIED__
+#if __UNIFIED__ || __ANDROID__
 			if (BootStrapper == null)
 			{
-				RxApp.SuspensionHost.ObserveAppState<AppBootstrapper>().Take(1).Wait();
+				RxApp.SuspensionHost.ObserveAppState<AppBootstrapper>()
+				     .Where(data => data != null)
+				     .Take(1)
+				     .Wait();
 			}
 #endif
 
