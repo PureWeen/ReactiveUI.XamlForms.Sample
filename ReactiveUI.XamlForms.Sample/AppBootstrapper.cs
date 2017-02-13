@@ -7,6 +7,8 @@ using Akavache;
 using System.Runtime.Serialization;
 using System.Linq;
 using ReactiveUI.XamlForms.Sample.ViewModels;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace ReactiveUI.XamlForms.Sample
 {
@@ -40,12 +42,14 @@ namespace ReactiveUI.XamlForms.Sample
 			Locator.CurrentMutable.Register(() => new SecondPage(), typeof(IViewFor<SecondPageViewModel>));
         }
 
-		//The init is only called from CreateNewAppState... If this comes from the CACHE
-		//then the Router is already instantiated and set to the correct VM
-        public void Init()
-        { 
-			Router = new RoutingState();
-			Router.Navigate.Execute(new MainPageViewModel(this));
+        //The init is only called from CreateNewAppState... If this comes from the CACHE
+        //then the Router is already instantiated and set to the correct VM
+        //I await the navigation because Xam Forms can get annoyed if there's not a 
+        //Page on the stack once it starts up
+        public async Task Init()
+        {
+            Router = new RoutingState();
+            await Router.Navigate.Execute(new MainPageViewModel(this));
         }
 
         public Page CreateMainPage()

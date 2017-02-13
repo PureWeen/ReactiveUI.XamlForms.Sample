@@ -10,6 +10,7 @@ using System.Runtime.Serialization;
 
 namespace ReactiveUI.XamlForms.Sample.ViewModels
 {
+    [DataContract]
     public class MainPageViewModel : ReactiveObject, IRoutableViewModel, ISupportsActivation
     {
         [IgnoreDataMember]

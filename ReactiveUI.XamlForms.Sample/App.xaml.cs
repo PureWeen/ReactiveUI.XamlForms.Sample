@@ -15,7 +15,7 @@ namespace ReactiveUI.XamlForms.Sample
 {
 	public partial class App : Application
 	{
-		static AppBootstrapper _bootStrapper;
+		AppBootstrapper _bootStrapper;
 		AppBootstrapper BootStrapper
 		{
 			get
@@ -34,8 +34,6 @@ namespace ReactiveUI.XamlForms.Sample
 			//this seems wrong but when doing a resume on iOS or android this is all that I've found that works
 			//to make sure the bootstrapper loads
 			//I'm probably doing a life cycle thing wrong sommewhere :-/
-
-#if __UNIFIED__ || __ANDROID__
 			if (BootStrapper == null)
 			{
 				RxApp.SuspensionHost.ObserveAppState<AppBootstrapper>()
@@ -43,7 +41,6 @@ namespace ReactiveUI.XamlForms.Sample
 				     .Take(1)
 				     .Wait();
 			}
-#endif
 
 			MainPage = BootStrapper.CreateMainPage();
 		}
@@ -83,9 +80,12 @@ namespace ReactiveUI.XamlForms.Sample
 		{
 			RxApp.SuspensionHost.CreateNewAppState = () =>
 			{
-				_bootStrapper = new AppBootstrapper();
-				_bootStrapper.Init();
-				return _bootStrapper;
+                //Ensure App has initialize
+                //Xam Forms gets annoyed if you don't have a page on the
+                //Navigation stack so this just ensures that it is there
+				var bootStrapper = new AppBootstrapper();
+				bootStrapper.Init().Wait();
+				return bootStrapper;
 			};
 
 			//Make sure this is called after something accesses RxApp so that RxApp can register its defaults
