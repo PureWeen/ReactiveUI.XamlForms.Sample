@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ReactiveUI.XamForms;
 using ReactiveUI.XamlForms.Sample.ViewModels;
 using Xamarin.Forms;
+using Splat;
+using System.Diagnostics;
 
 namespace ReactiveUI.XamlForms.Sample
 {
@@ -20,5 +23,23 @@ namespace ReactiveUI.XamlForms.Sample
 			this.OneWayBind(ViewModel, vm => vm.MainText, v => v.lbl.Text);
 			this.OneWayBind(ViewModel, vm => vm.NavigateToSecondPage, v => v.btn.Command);
 		}
-	}
+
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+
+            if(propertyName == nameof(ViewModel))
+            {
+                Debug.WriteLine($"ViewModel Set: {ViewModel}");
+            }
+        }
+
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+
+            
+        }
+    }
 }

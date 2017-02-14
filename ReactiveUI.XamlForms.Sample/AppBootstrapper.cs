@@ -30,6 +30,7 @@ namespace ReactiveUI.XamlForms.Sample
             set
             {
                 _Router = value;
+
             }
         }
 
@@ -54,10 +55,16 @@ namespace ReactiveUI.XamlForms.Sample
 
         public Page CreateMainPage()
         {
-            // NB: This returns the opening page that the platform-specific
-            // boilerplate code will look for. It will know to find us because
-            // we've registered our AppBootstrapper as an IScreen.
-            return new ReactiveUI.XamForms.RoutedViewHost();
+            var viewHost =  new ReactiveUI.XamForms.RoutedViewHost();
+
+
+            viewHost.Pushed += (x, args) =>
+            {
+                //Hack to null out the ViewModel to demonstrate it not being set when going backwards
+                (viewHost.Navigation.NavigationStack.First() as IViewFor).ViewModel = null;
+            };
+
+            return viewHost;
         }
     }
 }
