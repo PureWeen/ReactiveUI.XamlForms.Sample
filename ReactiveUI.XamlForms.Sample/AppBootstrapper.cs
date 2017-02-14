@@ -50,19 +50,16 @@ namespace ReactiveUI.XamlForms.Sample
         public async Task Init()
         {
             Router = new RoutingState();
-            await Router.Navigate.Execute(new MainPageViewModel(this));
+            
+            Router.NavigationStack.Add(new MainPageViewModel(this));
+            Router.NavigationStack.Add(new SecondPageViewModel(this));
+            //await Router.Navigate.Execute(new MainPageViewModel(this));
         }
 
         public Page CreateMainPage()
         {
             var viewHost =  new ReactiveUI.XamForms.RoutedViewHost();
 
-
-            viewHost.Pushed += (x, args) =>
-            {
-                //Hack to null out the ViewModel to demonstrate it not being set when going backwards
-                (viewHost.Navigation.NavigationStack.First() as IViewFor).ViewModel = null;
-            };
 
             return viewHost;
         }
