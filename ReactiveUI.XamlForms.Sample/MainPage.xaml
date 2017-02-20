@@ -8,10 +8,10 @@
              x:Class="ReactiveUI.XamlForms.Sample.MainPage">
 
 	<StackLayout>
-		<Label x:Name="lbl" Text="{Binding MainText}" 
+		<Label x:Name="lbl" 
 	           VerticalOptions="Center" 
 	           HorizontalOptions="Center" />
-		<Button x:Name="btn" Text="Go To Second Page" Command="{Binding NavigateToSecondPage}"></Button>
+		<Button x:Name="btn" Text="Go To Second Page"></Button>
 	</StackLayout>
 
 </d:ReactiveContentPage>
