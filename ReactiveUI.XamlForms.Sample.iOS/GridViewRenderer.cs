@@ -24,7 +24,7 @@ namespace ReactiveUI.XamlForms.Sample.iOS
             if (Control == null)
             {
                 SecondPageViewModel vm = e.NewElement.BindingContext as SecondPageViewModel;
-                var layout = new UICollectionViewFlowLayout();
+                var layout = new UICollectionViewFlowLayout() { ScrollDirection = UICollectionViewScrollDirection.Vertical };
                 var view = new GridViewCollectionView(
                     new CoreGraphics.CGRect(this.Element.X, this.Element.Y, (float)this.Element.Width, (float)this.Element.Height), layout);
 

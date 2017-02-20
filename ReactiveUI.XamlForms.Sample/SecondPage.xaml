@@ -6,9 +6,16 @@
              xmlns:vm="clr-namespace:ReactiveUI.XamlForms.Sample.ViewModels;assembly=ReactiveUI.XamlForms.Sample"
              xmlns:local="clr-namespace:ReactiveUI.XamlForms.Sample"
              x:TypeArguments="vm:SecondPageViewModel">
-    <StackLayout>
-        <Label x:Name="lbl" VerticalOptions="Center" HorizontalOptions="Center" />
-        <Button x:Name="btn" Text="Go Back"></Button>
-        <local:GridView x:Name="gridView" ViewModel="{Binding ViewModel}"></local:GridView>
-    </StackLayout>
+    <Grid VerticalOptions="Fill">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"  />
+            <RowDefinition Height="*"  />
+
+
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" x:Name="lbl" VerticalOptions="Center" HorizontalOptions="Center" />
+        <Button Grid.Row="1" x:Name="btn" Text="Go Back"></Button>
+        <local:GridView Grid.Row="2" x:Name="gridView"></local:GridView>
+    </Grid>
 </d:ReactiveContentPage>
