@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<d:ReactiveContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="ReactiveUI.XamlForms.Sample.GridView"
+             xmlns:d="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+             xmlns:vm="clr-namespace:ReactiveUI.XamlForms.Sample.ViewModels;assembly=ReactiveUI.XamlForms.Sample"
+             xmlns:local="clr-namespace:ReactiveUI.XamlForms.Sample"
+             x:TypeArguments="vm:SecondPageViewModel">
+  <ContentView.Content>
+  </ContentView.Content>
+</d:ReactiveContentView>

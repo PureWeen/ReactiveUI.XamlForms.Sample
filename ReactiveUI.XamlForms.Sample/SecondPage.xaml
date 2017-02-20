@@ -4,9 +4,11 @@
              x:Class="ReactiveUI.XamlForms.Sample.SecondPage"
              xmlns:d="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
              xmlns:vm="clr-namespace:ReactiveUI.XamlForms.Sample.ViewModels;assembly=ReactiveUI.XamlForms.Sample"
+             xmlns:local="clr-namespace:ReactiveUI.XamlForms.Sample"
              x:TypeArguments="vm:SecondPageViewModel">
     <StackLayout>
-        <Label x:Name="lbl" Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
-        <Button x:Name="btn" Text="Go Back" Command="{Binding NavigateBack}"></Button>
+        <Label x:Name="lbl" VerticalOptions="Center" HorizontalOptions="Center" />
+        <Button x:Name="btn" Text="Go Back"></Button>
+        <local:GridView x:Name="gridView" ViewModel="{Binding ViewModel}"></local:GridView>
     </StackLayout>
 </d:ReactiveContentPage>
