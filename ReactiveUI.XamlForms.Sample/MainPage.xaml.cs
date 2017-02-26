@@ -14,9 +14,7 @@ namespace ReactiveUI.XamlForms.Sample
 		public MainPage()
 		{
 			InitializeComponent();
-
-			//Reactiveui doesn't set the bindingcontext
-			//so if you want to use bindingcontext then set that yourself
+            
 			this.OneWayBind(ViewModel, vm => vm.MainText, v => v.lbl.Text);
 			this.OneWayBind(ViewModel, vm => vm.NavigateToSecondPage, v => v.btn.Command);
 		}

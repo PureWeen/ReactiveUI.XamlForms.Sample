@@ -16,8 +16,6 @@ namespace ReactiveUI.XamlForms.Sample
 		public SecondPage ()
 		{
 			InitializeComponent ();
-			//Reactiveui doesn't set the bindingcontext
-			//so if you want to use bindingcontext then set that yourself
 			this.OneWayBind(ViewModel, vm => vm.MainText, v => v.lbl.Text);
 			this.OneWayBind(ViewModel, vm => vm.NavigateBack, v => v.btn.Command);
             this.OneWayBind(ViewModel, vm => vm, v => v.gridView.ViewModel);
@@ -26,11 +24,11 @@ namespace ReactiveUI.XamlForms.Sample
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
-            if(propertyName == "ViewModel")
-            {
-                gridView.ViewModel = ViewModel;
-                gridView.BindingContext = ViewModel;
-            }
+            //if(propertyName == "ViewModel")
+            //{
+            //    gridView.ViewModel = ViewModel;
+            //    gridView.BindingContext = ViewModel;
+            //}
         }
     }
 }
