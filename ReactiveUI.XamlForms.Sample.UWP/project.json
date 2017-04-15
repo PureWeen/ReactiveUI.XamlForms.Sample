@@ -6,7 +6,8 @@
     "reactiveui": "7.2.0",
     "reactiveui-events-xamforms": "7.2.0",
     "reactiveui-xamforms": "7.2.0",
-    "Rx-PlatformServices": "2.3.0",
+    "Rx-Core": "2.2.5",
+    "Rx-PlatformServices": "2.2.5",
     "Splat": "1.6.2",
     "Xamarin.Forms": "2.3.4.231"
   },
