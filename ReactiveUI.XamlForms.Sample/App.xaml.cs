@@ -84,7 +84,7 @@ namespace ReactiveUI.XamlForms.Sample
                 //Xam Forms gets annoyed if you don't have a page on the
                 //Navigation stack so this just ensures that it is there
 				var bootStrapper = new AppBootstrapper();
-				bootStrapper.Init().Wait();
+				bootStrapper.Init();
 				return bootStrapper;
 			};
 

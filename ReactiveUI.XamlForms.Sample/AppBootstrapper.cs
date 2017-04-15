@@ -46,10 +46,12 @@ namespace ReactiveUI.XamlForms.Sample
         //then the Router is already instantiated and set to the correct VM
         //I await the navigation because Xam Forms can get annoyed if there's not a 
         //Page on the stack once it starts up
-        public async Task Init()
+        public void Init()
         {
             Router = new RoutingState();
-            await Router.Navigate.Execute(new MainPageViewModel(this));
+
+            //the RxUI router will navigate the pages on the stack when it's first created
+            Router.NavigationStack.Add(new MainPageViewModel(this));
         }
 
         public Page CreateMainPage()
