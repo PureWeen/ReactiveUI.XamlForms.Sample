@@ -1,8 +1,12 @@
 ﻿using System;
 using ReactiveUI;
 using Splat;
+
+#if !NET_45
 using Xamarin.Forms;
 using ReactiveUI.XamForms;
+#endif
+
 using Akavache;
 using System.Runtime.Serialization;
 using System.Linq;
@@ -54,6 +58,7 @@ namespace ReactiveUI.XamlForms.Sample
             Router.NavigationStack.Add(new MainPageViewModel(this));
         }
 
+#if !NET_45
         public Page CreateMainPage()
         {
             // NB: This returns the opening page that the platform-specific
@@ -61,5 +66,18 @@ namespace ReactiveUI.XamlForms.Sample
             // we've registered our AppBootstrapper as an IScreen.
             return new ReactiveUI.XamForms.RoutedViewHost();
         }
+#else
+        public RoutedViewHost CreateMainPage()
+        {
+            var host = new ReactiveUI.RoutedViewHost();
+
+            if (Router == null)
+                throw new ArgumentNullException(nameof(Router));
+
+            host.Router = Router;
+            return host;
+        }
+#endif
+
     }
 }

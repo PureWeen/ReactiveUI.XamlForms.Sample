@@ -17,7 +17,7 @@ namespace ReactiveUI.XamlForms.Sample
 		{
 			InitializeComponent ();
 			this.OneWayBind(ViewModel, vm => vm.MainText, v => v.lbl.Text);
-			this.OneWayBind(ViewModel, vm => vm.NavigateBack, v => v.btn.Command);
+			this.BindCommand(ViewModel, vm => vm.NavigateBack, v => v.btn);
             this.OneWayBind(ViewModel, vm => vm, v => v.gridView.ViewModel);
 		}
 

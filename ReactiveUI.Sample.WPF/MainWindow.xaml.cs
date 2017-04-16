@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ReactiveUI;
+using ReactiveUI.XamlForms.Sample;
+using ReactiveUI.XamlForms.Sample.ViewModels;
+using System.Reactive.Linq;
 
 namespace ReactiveUI.Sample.WPF
 {
@@ -21,49 +24,33 @@ namespace ReactiveUI.Sample.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        ReactiveList<Datum> DataSource = new ReactiveList<Datum>();
-        IReactiveDerivedList<Datum> Data { get; set; }
+        AppBootstrapper _bootStrapper;
+        AppBootstrapper BootStrapper
+        {
+            get
+            {
+                if (_bootStrapper == null)
+                    _bootStrapper = RxApp.SuspensionHost.GetAppState<AppBootstrapper>();
+
+                return _bootStrapper;
+            }
+        }
 
         public MainWindow()
         {
             InitializeComponent();
-            this.Loaded += MainWindow_Loaded;
 
-            for (int i = 0; i < 1000; i++)
-                DataSource.Add(new Datum());
-
-            Task.Run(()=>
-                Data = DataSource.CreateDerivedCollection(x => x, Filter, scheduler: RxApp.TaskpoolScheduler)
-            );
-        }
-
-
-        void Reset()
-        {
-            
-            for (int i = 200; i < 250; i++)
-                DataSource[i].Show = true;
+            RxApp.SuspensionHost.ObserveAppState<AppBootstrapper>()
+                     .Where(data => data != null)
+                     .ObserveOn(RxApp.MainThreadScheduler)
+                     .Take(1)
+                     .Subscribe(_ =>
+                     {
+                         Content = BootStrapper.CreateMainPage();
+                     });
 
 
-            DataSource.Add(new Datum());
-        }
-
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            Reset();
-           // Data.Reset();
-            
-        }
-
-        public bool Filter(Datum item)
-        {
-            return item.Show;
-        }
-
-        public class Datum
-        {
-            public bool Show { get; set; }
+         
         }
     }
 }
