@@ -128,9 +128,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReactiveUI.Sample.Library\ReactiveUI.Sample.Library.csproj">
-      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
-      <Name>ReactiveUI.Sample.Library</Name>
+    <ProjectReference Include="..\ReactiveUI.Sample.NetStandard\ReactiveUI.Sample.NetStandard.csproj">
+      <Project>{00270ee5-e4a1-4ee3-ac41-a012d9b38228}</Project>
+      <Name>ReactiveUI.Sample.NetStandard</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

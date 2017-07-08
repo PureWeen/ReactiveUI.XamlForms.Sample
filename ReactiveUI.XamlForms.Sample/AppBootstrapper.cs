@@ -41,7 +41,7 @@ namespace ReactiveUI.XamlForms.Sample
         public AppBootstrapper()
         {
 			Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
-			BlobCache.ApplicationName = "ReactiveUI.XamlForms.Sample";
+			//BlobCache.ApplicationName = "ReactiveUI.XamlForms.Sample";
 			Locator.CurrentMutable.Register(() => new MainPage(), typeof(IViewFor<MainPageViewModel>));
 			Locator.CurrentMutable.Register(() => new SecondPage(), typeof(IViewFor<SecondPageViewModel>));
         }
