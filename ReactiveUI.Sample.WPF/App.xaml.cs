@@ -1,4 +1,6 @@
 ﻿using Akavache;
+using Akavache.Duck;
+using Akavache.Mobile;
 using Newtonsoft.Json;
 using ReactiveUI.XamlForms.Sample;
 using Splat;
@@ -22,14 +24,12 @@ namespace ReactiveUI.Sample.WPF
     {
         public App()
         {
-            BlobCache.ApplicationName = "ReactiveUI.WPF.Sample";
             Initialize();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            base.OnExit(e);
-            BlobCache.Shutdown().Wait();
+            base.OnExit(e); 
         }
 
         AutoSuspendHelper autoSuspendHelper;
@@ -40,7 +40,7 @@ namespace ReactiveUI.Sample.WPF
             //Make sure this is called after something accesses RxApp so that RxApp can register its defaults
             //And then this can override those
             Registrations.Register(Locator.CurrentMutable);
-
+            Locator.CurrentMutable.RegisterLazySingleton<IBlobWrapper>(() => new BlobWrapper());
             autoSuspendHelper = new AutoSuspendHelper(this);
             RxApp.SuspensionHost.SetupDefaultSuspendResume();
 
@@ -60,27 +60,6 @@ namespace ReactiveUI.Sample.WPF
     }
 
 
-    //For some reason the fallback on the internals of wpf reactiveui isn't calling CreateNewAppState
-    public class WPFAkavacheDriver : ISuspensionDriver, IEnableLogger
-    {
-        public IObservable<object> LoadState()
-        {
-            return BlobCache.UserAccount.GetObject<object>("__AppState")
-                .LoggedCatch(this, Observable.Return(RxApp.SuspensionHost.CreateNewAppState()));
-        }
-
-        public IObservable<Unit> SaveState(object state)
-        {
-            return BlobCache.UserAccount.InsertObject("__AppState", state)
-                .SelectMany(BlobCache.UserAccount.Flush());
-        }
-
-        public IObservable<Unit> InvalidateState()
-        {
-            return BlobCache.UserAccount.InvalidateObject<object>("__AppState");
-        }
-    }
-
     public class Registrations
     {
         public static void Register(IMutableDependencyResolver resolver)
@@ -92,7 +71,7 @@ namespace ReactiveUI.Sample.WPF
                 TypeNameHandling = TypeNameHandling.All,
             }, typeof(JsonSerializerSettings), null);
 
-            var akavacheDriver = new WPFAkavacheDriver();
+            var akavacheDriver = new AkavacheDriver();
             resolver.Register(() => akavacheDriver, typeof(ISuspensionDriver), null);
 
             // NB: These correspond to the hacks in Akavache.Http's registrations

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Splat;
 using Xamarin.Forms;
+using Akavache.Duck;
 #if WINDOWS_UWP
 using Windows.ApplicationModel.Activation;
 #endif
@@ -36,10 +37,10 @@ namespace ReactiveUI.XamlForms.Sample
 			//I'm probably doing a life cycle thing wrong sommewhere :-/
 			if (BootStrapper == null)
 			{
-				RxApp.SuspensionHost.ObserveAppState<AppBootstrapper>()
-				     .Where(data => data != null)
-				     .Take(1)
-				     .Wait();
+				//RxApp.SuspensionHost.ObserveAppState<AppBootstrapper>()
+				//     .Where(data => data != null)
+				//     .Take(1)
+				//     .Wait();
 			}
 
 			MainPage = BootStrapper.CreateMainPage();
@@ -78,6 +79,7 @@ namespace ReactiveUI.XamlForms.Sample
 
 			)
 		{
+
 			RxApp.SuspensionHost.CreateNewAppState = () =>
 			{
                 //Ensure App has initialize
@@ -91,6 +93,7 @@ namespace ReactiveUI.XamlForms.Sample
 			//Make sure this is called after something accesses RxApp so that RxApp can register its defaults
 			//And then this can override those
 			 Akavache.Mobile.Registrations.Register(Locator.CurrentMutable);
+            Locator.CurrentMutable.RegisterLazySingleton<IBlobWrapper>(() => new BlobWrapper());
 
             autoSuspendHelper = new AutoSuspendHelper(application);
 #if WINDOWS_UWP

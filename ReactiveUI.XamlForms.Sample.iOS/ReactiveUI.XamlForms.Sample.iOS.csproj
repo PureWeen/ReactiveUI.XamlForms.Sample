@@ -187,6 +187,12 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Akavache.Duck.iOS\Akavache.Duck.iOS.csproj">
+      <Project>{ef293f28-c20c-4504-ad5a-1e36141ebecd}</Project>
+      <Name>Akavache.Duck.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\ReactiveUI.Sample.NetStandard\ReactiveUI.Sample.NetStandard.csproj">
       <Project>{00270ee5-e4a1-4ee3-ac41-a012d9b38228}</Project>
       <Name>ReactiveUI.Sample.NetStandard</Name>
