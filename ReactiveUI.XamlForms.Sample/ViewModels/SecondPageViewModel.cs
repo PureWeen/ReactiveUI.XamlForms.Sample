@@ -4,6 +4,8 @@ using ReactiveUI;
 using Splat;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
+using System.Reactive.Disposables;
+using System;
 
 namespace ReactiveUI.XamlForms.Sample.ViewModels
 {
@@ -44,6 +46,14 @@ namespace ReactiveUI.XamlForms.Sample.ViewModels
 			HostScreen = screen ?? Locator.Current.GetService<IScreen>();
 			NavigateBack = ReactiveCommand.CreateFromObservable(
 				() => HostScreen.Router.NavigateBack.Execute(Unit.Default));
+
+            this.WhenActivated((CompositeDisposable disp) =>
+            {
+                //just hack a forced saved
+                Locator.Current.GetService<ISuspensionDriver>()
+                    .SaveState(RxApp.SuspensionHost.AppState)
+                    .Subscribe();
+            });
 		}
 
 

@@ -49,6 +49,14 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Akavache, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AkavacheNetStandard\MonoAndroid70\Akavache.dll</HintPath>
+    </Reference>
+    <Reference Include="Akavache.Sqlite3, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AkavacheSqlLiteNetStandard\netstandard1.1\Akavache.Sqlite3.dll</HintPath>
+    </Reference>
     <Reference Include="FormsViewGroup, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Forms.2.3.4.247\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
     </Reference>
@@ -184,16 +192,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Akavache.Duck.Android\Akavache.Duck.Android.csproj">
-      <Project>{56a5a9fe-62be-4adb-950b-911d282f1d8f}</Project>
-      <Name>Akavache.Duck.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ReactiveUI.Sample.NetStandard\ReactiveUI.Sample.NetStandard.csproj">
-      <Project>{00270ee5-e4a1-4ee3-ac41-a012d9b38228}</Project>
-      <Name>ReactiveUI.Sample.NetStandard</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="..\ReactiveUI.XamlForms.Sample\ReactiveUI.XamlForms.Sample.projitems" Label="Shared" Condition="Exists('..\ReactiveUI.XamlForms.Sample\ReactiveUI.XamlForms.Sample.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

@@ -11,4 +11,10 @@
     <PackageReference Include="System.Reactive" Version="3.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Akavache">
+      <HintPath>..\AkavacheNetStandard\MonoAndroid70\Akavache.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

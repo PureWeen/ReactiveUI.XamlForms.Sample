@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ReactiveUI.XamForms;
 using ReactiveUI.XamlForms.Sample.ViewModels;
 using Xamarin.Forms;
-
+using System.Reactive.Disposables;
 
 namespace ReactiveUI.XamlForms.Sample
 {
@@ -19,7 +19,11 @@ namespace ReactiveUI.XamlForms.Sample
 			this.OneWayBind(ViewModel, vm => vm.MainText, v => v.lbl.Text);
 			this.BindCommand(ViewModel, vm => vm.NavigateBack, v => v.btn);
             this.OneWayBind(ViewModel, vm => vm, v => v.gridView.ViewModel);
-		}
+
+            this.WhenActivated((CompositeDisposable disp) =>
+            {
+            });
+        }
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
