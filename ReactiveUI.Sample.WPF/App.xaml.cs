@@ -45,12 +45,7 @@ namespace ReactiveUI.Sample.WPF
 
             RxApp.SuspensionHost.CreateNewAppState = () =>
             {
-                //Ensure App has initialize
-                //Xam Forms gets annoyed if you don't have a page on the
-                //Navigation stack so this just ensures that it is there
-                var bootStrapper = new AppBootstrapper();
-                bootStrapper.Init();
-                return bootStrapper;
+                return new object();
             };
 
             return autoSuspendHelper;
