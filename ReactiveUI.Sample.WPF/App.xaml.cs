@@ -1,4 +1,4 @@
-﻿using Akavache;
+﻿
 using Newtonsoft.Json;
 using ReactiveUI.XamlForms.Sample;
 using Splat;
@@ -22,14 +22,12 @@ namespace ReactiveUI.Sample.WPF
     {
         public App()
         {
-            BlobCache.ApplicationName = "ReactiveUI.WPF.Sample";
             Initialize();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
-            BlobCache.Shutdown().Wait();
         }
 
         AutoSuspendHelper autoSuspendHelper;
@@ -63,21 +61,23 @@ namespace ReactiveUI.Sample.WPF
     //For some reason the fallback on the internals of wpf reactiveui isn't calling CreateNewAppState
     public class WPFAkavacheDriver : ISuspensionDriver, IEnableLogger
     {
+        object _state = null;
+
         public IObservable<object> LoadState()
         {
-            return BlobCache.UserAccount.GetObject<object>("__AppState")
-                .LoggedCatch(this, Observable.Return(RxApp.SuspensionHost.CreateNewAppState()));
+            return Observable.Return(_state);
         }
 
         public IObservable<Unit> SaveState(object state)
         {
-            return BlobCache.UserAccount.InsertObject("__AppState", state)
-                .SelectMany(BlobCache.UserAccount.Flush());
+            this._state = state;
+            return Observable.Return(Unit.Default);
         }
 
         public IObservable<Unit> InvalidateState()
         {
-            return BlobCache.UserAccount.InvalidateObject<object>("__AppState");
+            _state = null;
+            return Observable.Return(Unit.Default);
         }
     }
 

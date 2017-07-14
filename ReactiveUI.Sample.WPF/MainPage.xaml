@@ -5,11 +5,13 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ReactiveUI.Sample.WPF"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300">
+             Height="500"
+             Width="500"
+      d:DesignHeight="300" d:DesignWidth="300" Background="Purple">
 
     <StackPanel>
         <Label x:Name="lbl"  />
-        <Button x:Name="btn" Content="Go To Second Page"></Button>
+        <Button x:Name="btn" Content="Trigger Image Loading"></Button>
     </StackPanel>
 
 </UserControl>

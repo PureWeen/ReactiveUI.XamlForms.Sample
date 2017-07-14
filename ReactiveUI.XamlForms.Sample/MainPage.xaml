@@ -11,7 +11,7 @@
 		<Label x:Name="lbl" 
 	           VerticalOptions="Center" 
 	           HorizontalOptions="Center" />
-		<Button x:Name="btn" Text="Go To Second Page"></Button>
+		<Button x:Name="btn" Text="Trigger Something"></Button>
 	</StackLayout>
 
 </d:ReactiveContentPage>

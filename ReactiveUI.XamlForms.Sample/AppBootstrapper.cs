@@ -7,7 +7,6 @@ using Xamarin.Forms;
 using ReactiveUI.XamForms;
 #endif
 
-using Akavache;
 using System.Runtime.Serialization;
 using System.Linq;
 using ReactiveUI.XamlForms.Sample.ViewModels;
@@ -43,7 +42,7 @@ namespace ReactiveUI.XamlForms.Sample
 			Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
 			//BlobCache.ApplicationName = "ReactiveUI.XamlForms.Sample";
 			Locator.CurrentMutable.Register(() => new MainPage(), typeof(IViewFor<MainPageViewModel>));
-			Locator.CurrentMutable.Register(() => new SecondPage(), typeof(IViewFor<SecondPageViewModel>));
+			
         }
 
         //The init is only called from CreateNewAppState... If this comes from the CACHE
@@ -53,9 +52,6 @@ namespace ReactiveUI.XamlForms.Sample
         public void Init()
         {
             Router = new RoutingState();
-
-            //the RxUI router will navigate the pages on the stack when it's first created
-            Router.NavigationStack.Add(new MainPageViewModel(this));
         }
 
 #if !NET_45

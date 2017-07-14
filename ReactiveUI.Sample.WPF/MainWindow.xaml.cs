@@ -24,33 +24,13 @@ namespace ReactiveUI.Sample.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        AppBootstrapper _bootStrapper;
-        AppBootstrapper BootStrapper
-        {
-            get
-            {
-                if (_bootStrapper == null)
-                    _bootStrapper = RxApp.SuspensionHost.GetAppState<AppBootstrapper>();
-
-                return _bootStrapper;
-            }
-        }
-
         public MainWindow()
         {
             InitializeComponent();
+            var page = new MainPage();
+            page.ViewModel = new MainPageViewModel();
+            Content = page;
 
-            RxApp.SuspensionHost.ObserveAppState<AppBootstrapper>()
-                     .Where(data => data != null)
-                     .ObserveOn(RxApp.MainThreadScheduler)
-                     .Take(1)
-                     .Subscribe(_ =>
-                     {
-                         Content = BootStrapper.CreateMainPage();
-                     });
-
-
-         
         }
     }
 }
