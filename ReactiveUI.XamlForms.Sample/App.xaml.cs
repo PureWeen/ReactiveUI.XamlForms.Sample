@@ -15,13 +15,15 @@ namespace ReactiveUI.XamlForms.Sample
 {
 	public partial class App : Application
 	{
-		AppBootstrapper _bootStrapper;
-		AppBootstrapper BootStrapper
+        CompositionRoot _compositionRoot;
+
+        ApplicationState _bootStrapper;
+        ApplicationState BootStrapper
 		{
 			get
 			{
 				if (_bootStrapper == null)
-					_bootStrapper = RxApp.SuspensionHost.GetAppState<AppBootstrapper>();
+					_bootStrapper = RxApp.SuspensionHost.GetAppState<ApplicationState>();
 
 				return _bootStrapper;
 			}
@@ -30,20 +32,9 @@ namespace ReactiveUI.XamlForms.Sample
 		public App()
 		{
 			InitializeComponent();
-
-			//this seems wrong but when doing a resume on iOS or android this is all that I've found that works
-			//to make sure the bootstrapper loads
-			//I'm probably doing a life cycle thing wrong sommewhere :-/
-			if (BootStrapper == null)
-			{
-				RxApp.SuspensionHost.ObserveAppState<AppBootstrapper>()
-				     .Where(data => data != null)
-				     .Take(1)
-				     .Wait();
-			}
-
-			MainPage = BootStrapper.CreateMainPage();
-		}
+            _compositionRoot = new CompositionRoot();
+            MainPage = _compositionRoot.CreateMainPage();
+        }
 		protected override void OnStart()
 		{
 			// Handle when your app starts
@@ -78,12 +69,20 @@ namespace ReactiveUI.XamlForms.Sample
 
 			)
 		{
+
+            // this mainly happens with android where activity is destroyed
+            // but everything else stays in memory
+            if(autoSuspendHelper != null)
+            {
+                return autoSuspendHelper;
+            }
+
 			RxApp.SuspensionHost.CreateNewAppState = () =>
 			{
                 //Ensure App has initialize
                 //Xam Forms gets annoyed if you don't have a page on the
                 //Navigation stack so this just ensures that it is there
-				var bootStrapper = new AppBootstrapper();
+				var bootStrapper = new ApplicationState();
 				bootStrapper.Init();
 				return bootStrapper;
 			};
@@ -97,9 +96,7 @@ namespace ReactiveUI.XamlForms.Sample
             autoSuspendHelper.OnLaunched(e);
 #endif
 
-
             RxApp.SuspensionHost.SetupDefaultSuspendResume();
-
 			return autoSuspendHelper;
 		}
 

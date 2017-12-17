@@ -11,7 +11,10 @@
 		<Label x:Name="lbl" 
 	           VerticalOptions="Center" 
 	           HorizontalOptions="Center" />
-		<Button x:Name="btn" Text="Go To Second Page"></Button>
+        <Entry x:Name="someTExt" WidthRequest="300" 
+	           VerticalOptions="Center" 
+	           HorizontalOptions="Center" />
+        <Button x:Name="btn" Text="Go To Second Page"></Button>
 	</StackLayout>
 
 </d:ReactiveContentPage>

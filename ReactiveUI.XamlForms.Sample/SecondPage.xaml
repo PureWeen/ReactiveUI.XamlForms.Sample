@@ -11,8 +11,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto"  />
             <RowDefinition Height="*"  />
-
-
         </Grid.RowDefinitions>
         <Label Grid.Row="0" x:Name="lbl" VerticalOptions="Center" HorizontalOptions="Center" />
         <Button Grid.Row="1" x:Name="btn" Text="Go Back"></Button>

@@ -12,7 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)AppBootstrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CompositionRoot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GridView.xaml.cs">
       <DependentUpon>GridView.xaml</DependentUpon>
       <SubType>Code</SubType>

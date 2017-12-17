@@ -10,36 +10,28 @@ using System.Runtime.Serialization;
 namespace ReactiveUI.XamlForms.Sample.ViewModels
 {
     [DataContract]
-    public class MainPageViewModel : ReactiveObject, IRoutableViewModel, ISupportsActivation
+    public class MainPageViewModel : ViewModelBase
     {
         [IgnoreDataMember]
-        public string UrlPathSegment
+        public override string UrlPathSegment
         {
             get { return "Main Page"; }
         }
-
-        [IgnoreDataMember]
-        public IScreen HostScreen { get; protected set; }
-
+         
 
 		public string MainText { get { return "Main Page"; } }
+         
 
-        public ViewModelActivator Activator
+        [DataMember]
+        public string SomeText
         {
-            get;
-            private set;
+            get;set;
         }
+		public ReactiveCommand<Unit, ISampleRoutableViewModel> NavigateToSecondPage { get; private set;}
 
 
-		public ReactiveCommand<Unit, IRoutableViewModel> NavigateToSecondPage { get; private set;}
-
-
-        public MainPageViewModel(IScreen screen = null)
+        public MainPageViewModel(ISampleScreen screen = null) : base(screen)
         {
-            Activator = new ViewModelActivator();
-
-            HostScreen = screen ?? Locator.Current.GetService<IScreen>();
-
             NavigateToSecondPage = ReactiveCommand.CreateFromObservable(
                 () => HostScreen.Router.Navigate.Execute(new SecondPageViewModel(screen)));
 				                                                         

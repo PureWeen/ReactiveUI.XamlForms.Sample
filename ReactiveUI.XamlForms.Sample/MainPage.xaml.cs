@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Text;
 using System.Threading.Tasks;
 using ReactiveUI.XamForms;
@@ -14,9 +15,19 @@ namespace ReactiveUI.XamlForms.Sample
 		public MainPage()
 		{
 			InitializeComponent();
-            
-			this.OneWayBind(ViewModel, vm => vm.MainText, v => v.lbl.Text);
-			this.OneWayBind(ViewModel, vm => vm.NavigateToSecondPage, v => v.btn.Command);
-		}
+
+            this.WhenActivated(disp =>
+            {
+
+                this.OneWayBind(ViewModel, vm => vm.MainText, v => v.lbl.Text)
+                    .DisposeWith(disp);
+
+                this.OneWayBind(ViewModel, vm => vm.NavigateToSecondPage, v => v.btn.Command)
+                    .DisposeWith(disp);
+
+                this.Bind(ViewModel, vm => vm.SomeText, v => v.someTExt.Text)
+                    .DisposeWith(disp);
+            });
+        }
 	}
 }
